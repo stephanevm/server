@@ -22,6 +22,8 @@ const stats = {
     tunnels: 0
 };
 
+const subsubdomain = true; //steph
+
 // handle proxying a request to a client
 // will wait for a tunnel socket to become available
 function maybe_bounce(req, res, sock, head) {
@@ -32,6 +34,18 @@ function maybe_bounce(req, res, sock, head) {
     }
 
     const subdomain = tldjs.getSubdomain(hostname);
+
+
+    if(subsubdomain){
+        const idx = subdomain.indexOf('.')
+        if(idx>0){
+            subdomain = subdomain.substr(0, idx)
+        }else{
+            subdomain = null;
+        }
+
+    }
+
     if (!subdomain) {
         return false;
     }
